@@ -72,7 +72,76 @@ COUNT(*) - COUNT(end_lng) end_lng,
 COUNT(*) - COUNT(member_casual) member_casual
 FROM bike-share-415816.okay.combined_data
 ```
-![alt text](https://imgur.com/a/MePJpTz/200/200)  
+![Screenshot 2024-03-29 154759](https://github.com/prabinprojects/photos/assets/163358902/f686d1ca-3dbb-4285-a012-7f33613ebfb5)  
+
+I then checked for duplicate rows by using the following query.  
+```
+SELECT *
+FROM bike-share-415816.okay.combined_data
+WHERE ride_id (SELECT ride_id
+               FROM bike-share-415816.okay.combined_data
+               GROUP BY ride_id
+               HAVING COUNT(ride_id)>1
+```
+I found that there were no duplicate entries in the table.  
+I wrote queries to create table for quarters to analyse quarterly bike usage behaviour.  
+```
+CREATE TABLE bike-share-415816.okay.Q1 as
+(SELECT * FROM bike-share-415816.okay.January
+UNION ALL
+SELECT * FROM bike-share-415816.okay.February
+UNION ALL
+SELECT * FROM bike-share-415816.okay.March
+)
+```  
+The free trial veresion of Big Query does not support ammend functions such as add or delete therefore I transferred non null values into another table and named it `combined_data1`.
+```
+CREATE TABLE bike-share-415816.okay.combined_data1
+AS
+(SELECT * FROM bike-share-415816.okay.combined_data
+WHERE 
+start_station_name IS NOT NULL and
+end_station_name IS NOT NULL and
+end_station_id IS NOT NULL and
+end_lng IS NOT null and
+start_station_id IS NOT NULL);
+```
+I followed the same procedure for all the quarters for accurate quartely analysis.  
+I then extracted `HOUR`, `DAY`, `MONTH` from `combined_data1` and integrated them into new table called `acc_data`.  
+```
+CREATE TABLE bike-share-415816.okay.acc_data
+AS 
+(
+SELECT ride_id, rideable_type,start_station_name,end_station_name,start_lat,start_lng,end_lat,end_lng,member_casual as member_type,started_at,ended_at,
+CASE
+WHEN EXTRACT (DAYOFWEEK  from started_at) = 1 THEN 'SUN'
+WHEN EXTRACT (DAYOFWEEK  from started_at) = 2 THEN 'MON'
+WHEN EXTRACT (DAYOFWEEK  from started_at) = 3 THEN 'TUE'
+WHEN EXTRACT (DAYOFWEEK  from started_at) = 4 THEN 'WED'
+WHEN EXTRACT (DAYOFWEEK  from started_at) = 5 THEN 'THU'
+WHEN EXTRACT (DAYOFWEEK  from started_at) = 6 THEN 'FRI'
+ELSE 'SAT'
+END AS day_of_week,
+CASE
+  WHEN EXTRACT (month from started_at) = 01 THEN "JAN"
+  WHEN EXTRACT (month from started_at) = 02 THEN "FEB"
+  WHEN EXTRACT (month from started_at) = 03 THEN "MAR"
+  WHEN EXTRACT (month from started_at) = 04 THEN "APR"
+  WHEN EXTRACT (month from started_at) = 05 THEN "MAY"
+  WHEN EXTRACT (month from started_at) = 06 THEN "JUN"
+  WHEN EXTRACT (month from started_at) = 07 THEN "JUL"
+  WHEN EXTRACT (month from started_at) = 08 THEN "AUG"
+  WHEN EXTRACT (month from started_at) = 09 THEN "OCT"
+  WHEN EXTRACT (month from started_at) = 11 THEN "NOV"
+  WHEN EXTRACT (month from started_at) = 12 THEN "DEC"
+ELSE "UNKOWN"
+END AS month,
+timestamp_diff(ended_at, started_at, minute) AS ride_length_m,
+format_timestamp("%I:%M %p", started_at) AS time
+FROM bike-share-415816.okay.combined_data1
+WHERE timestamp_diff(ended_at, started_at, minute) > 1 and timestamp_diff(ended_at, started_at, hour) < 24);
+```
+
 
 
 
