@@ -55,6 +55,7 @@ SELECT * FROM bike-share-415816.okay.November
 UNION ALL
 SELECT * FROM bike-share-415816.okay.December);
 ```
+Before carrying out analysis it is important to check for any anomalies in the data. In order to do that I first checked for any null data.  
 Checking `NULL` data.  
 ```
 SELECT COUNT(*) - COUNT(ride_id) ride_id,
@@ -71,6 +72,7 @@ COUNT(*) - COUNT(end_lng) end_lng,
 COUNT(*) - COUNT(member_casual) member_casual
 FROM bike-share-415816.okay.combined_data
 ```
+![alt text](https://imgur.com/a/MePJpTz/200/200)  
 
 
 
