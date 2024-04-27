@@ -141,6 +141,214 @@ format_timestamp("%I:%M %p", started_at) AS time
 FROM bike-share-415816.okay.combined_data1
 WHERE timestamp_diff(ended_at, started_at, minute) > 1 and timestamp_diff(ended_at, started_at, hour) < 24);
 ```
+## Analysis  
+First, I wrote queries to find distribution of bike preferrences across member types  
+Demographic of member types
+```
+SELECT COUNT(*) as count, member_type
+FROM bike-share-415816.okay.acc_data
+GROUP BY member_type
+ORDER BY member_type
+```
+![Screenshot 2024-04-27 152500](https://github.com/prabinprojects/photos/assets/163358902/a452e2be-60e9-4d70-89fc-59043c1b58e9)  
+  
+### Distribution of bike types across members  
+```
+SELECT COUNT(*) as trips, rideable_type
+FROM bike-share-415816.okay.acc_data
+GROUP BY rideable_type
+ORDER BY trips
+```
+![Screenshot 2024-04-27 152933](https://github.com/prabinprojects/photos/assets/163358902/2e793ca0-3873-40b3-993a-6757cece2801)  
+
+Number of trips by `Month`  
+`Casual`
+```
+SELECT COUNT(*) AS TRIPS, month
+from bike-share-415816.okay.acc_data
+where member_type="casual"
+group by month, member_type 
+order by TRIPS
+```
+![Screenshot 2024-04-27 153824](https://github.com/prabinprojects/photos/assets/163358902/1c3155b3-1c05-45d0-bb47-de988c8ead9c)  
+
+`Member` 
+```
+SELECT COUNT(*) AS TRIPS, month
+from bike-share-415816.okay.acc_data
+where member_type="member"
+group by month, member_type 
+order by TRIPS
+```
+![Screenshot 2024-04-27 153939](https://github.com/prabinprojects/photos/assets/163358902/ebb24ae6-dda3-40af-8936-61f98a039819)  
+
+### Distribution of rides by day of the week  
+`Casual`  
+```
+SELECT day_of_week, count(day_of_week) as DAY
+FROM bike-share-415816.okay.acc_data
+WHERE member_type = "casual"
+GROUP BY day_of_week
+ORDER BY 
+CASE
+WHEN day_of_week = "SUN" then 1
+WHEN day_of_week = "MON" then 2
+WHEN day_of_week = "TUE" then 3
+WHEN day_of_week = "WED" then 4
+WHEN day_of_week = "THU" then 5
+WHEN day_of_week = "FRI" then 6
+WHEN day_of_week = "SAT" then 7
+END ASC
+```
+![Screenshot 2024-04-27 154502](https://github.com/prabinprojects/photos/assets/163358902/5e3f139d-d9a0-48f2-a4b1-98ad3022877c)  
+
+`Member`
+```
+SELECT day_of_week, count(day_of_week) as DAY
+FROM bike-share-415816.okay.acc_data
+WHERE member_type = "member"
+GROUP BY day_of_week
+ORDER BY 
+CASE
+WHEN day_of_week = "SUN" then 1
+WHEN day_of_week = "MON" then 2
+WHEN day_of_week = "TUE" then 3
+WHEN day_of_week = "WED" then 4
+WHEN day_of_week = "THU" then 5
+WHEN day_of_week = "FRI" then 6
+WHEN day_of_week = "SAT" then 7
+END ASC
+```
+![Screenshot 2024-04-27 154714](https://github.com/prabinprojects/photos/assets/163358902/31a0c408-7f0a-41e6-ad8e-0f5c47f92fff)  
+
+### Hourly trips pattern  
+`Casual`  
+```
+SELECT EXTRACT (hour FROM started_at) as TIME_OF_TRIP, count(*) as TRIPS
+FROM bike-share-415816.okay.acc_data
+GROUP BY time_of_trip, member_type
+HAVING member_type = "casual"
+ORDER BY TRIPS DESC
+```
+![Screenshot 2024-04-27 160219](https://github.com/prabinprojects/photos/assets/163358902/f810ebca-a919-443f-82c0-54207f740cc4)
+  
+`Member`
+
+```
+SELECT extract (hour from started_at) as TIME_OF_TRIP, count(*) as TRIPS
+FROM bike-share-415816.okay.acc_data
+GROUP BY time_of_trip, member_type
+HAVING member_type = "member"
+ORDER BY TRIPS DESC
+```
+![Screenshot 2024-04-27 155639](https://github.com/prabinprojects/photos/assets/163358902/48d33afc-2e8f-4a85-8b04-848abef8cfca)  
+
+### Average ride length
+Average ride length by `Month`  
+  
+`Casual`
+```
+SELECT ROUND(AVG(ride_length_m),2) AS AVG_RIDE, month
+FROM bike-share-415816.okay.acc_data
+WHERE member_type = 'casual'
+GROUP BY month, member_type
+ORDER BY AVG_RIDE
+```
+![Screenshot 2024-04-27 161630](https://github.com/prabinprojects/photos/assets/163358902/50d2b6f4-30b5-4b8f-96f3-d18ecf129e6b)  
+
+`Member`  
+```
+SELECT ROUND(AVG(ride_length_m),2) AS AVG_RIDE, month
+FROM bike-share-415816.okay.acc_data
+WHERE member_type = 'member'
+GROUP BY month, member_type
+ORDER BY AVG_RIDE
+```
+![Screenshot 2024-04-27 161809](https://github.com/prabinprojects/photos/assets/163358902/c76e6118-79a7-4003-9289-fe9f2addaa40)  
+
+Average ride length by `DAY`  
+  
+`Casual`
+```
+SELECT ROUND(AVG(ride_length_m),2) AS AVG_RIDE_LEN, day_of_week
+FROM bike-share-415816.okay.acc_data
+where member_type = 'casual'
+GROUP BY day_of_week, member_type
+ORDER BY AVG_RIDE_LEN
+```  
+![Screenshot 2024-04-27 162305](https://github.com/prabinprojects/photos/assets/163358902/7827ff32-0b6b-41a1-a5f1-2878b533bbe1)  
+
+`Member`  
+```
+SELECT ROUND(AVG(ride_length_m),2) AS AVG_RIDE_LEN, day_of_week
+FROM bike-share-415816.okay.acc_data
+where member_type = 'member'
+GROUP BY day_of_week, member_type
+ORDER BY AVG_RIDE_LEN
+```
+![Screenshot 2024-04-27 162124](https://github.com/prabinprojects/photos/assets/163358902/78f84f70-241c-452b-bb30-cfa287084a8e)
+
+  
+Average ride length by `Hour`  
+  
+`Casual` 
+```
+SELECT EXTRACT (hour FROM started_at) AS TIME_OF_TRIP, ROUND(AVG(ride_length_m),2) AS AVG_RIDE_LEN
+FROM bike-share-415816.okay.acc_data
+GROUP BY time_of_trip, member_type
+HAVING member_type = "casual"
+ORDER BY AVG_RIDE_LEN DESC
+```
+![Screenshot 2024-04-27 162941](https://github.com/prabinprojects/photos/assets/163358902/1730e746-27bb-41fe-825e-fded261cf4f6)  
+
+
+`Member`  
+```
+SELECT EXTRACT (hour FROM started_at) AS TIME_OF_TRIP, ROUND(AVG(ride_length_m),2) AS AVG_RIDE_LEN
+FROM bike-share-415816.okay.acc_data
+GROUP BY time_of_trip, member_type
+HAVING member_type = "member"
+ORDER BY AVG_RIDE_LEN DESC
+```
+![Screenshot 2024-04-27 163315](https://github.com/prabinprojects/photos/assets/163358902/e3afc478-c4f0-4196-ad95-86720968fca0)
+
+# Top stations by member type
+`Casual`  
+```
+SELECT 
+DISTINCT start_station_name, count(*) as TRIPS
+FROM bike-share-415816.okay.acc_data
+WHERE member_type = "casual"
+GROUP BY start_station_name, member_type
+ORDER BY TRIPS
+DESC LIMIT 10
+```
+![Screenshot 2024-04-27 164122](https://github.com/prabinprojects/photos/assets/163358902/491d663c-2ab4-4cfc-85cf-143595c82aeb)  
+
+`Member`  
+```
+SELECT 
+DISTINCT start_station_name, count(*) as TRIPS
+FROM bike-share-415816.okay.acc_data
+WHERE member_type = "member"
+GROUP BY start_station_name, member_type
+ORDER BY TRIPS
+DESC LIMIT 10
+```
+![Screenshot 2024-04-27 164308](https://github.com/prabinprojects/photos/assets/163358902/02f67f88-6c0c-478e-bb81-03981f45d3f8)  
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
