@@ -1,6 +1,6 @@
 # **Google Capstone Project: Cyclistic Case Study**
 ## Introduction
-This project is part of the Google Professional Data Analytics Course. I will be performing tasks similar to Junior Data Anlayst to draw insights from a fictional bike services provider company called Cyclistic. I will be following data analysis methodology adopted from the program that follows the steps of ASK, PREPARE, PROCESS, ANALYZE AND ACT.
+This project is a part of the Google Professional Data Analytics Course. In this report, I will be performing tasks similar to Junior Data Anlayst to draw insights from a fictional company called Cyclistic that provides bike services. The methodology of data analysis carried out for this project is adopted from the program that follows the steps of ASK, PREPARE, PROCESS, ANALYZE AND ACT.
 ## Scenario
 I am a junior data analyst working in the marketing analyst team at Cyclistic, a bike-share company in Chicago. The director of marketing believes the company’s future success depends on maximizing the number of annual memberships. Therefore, the team wants to understand how casual riders and annual members use Cyclistic bikes differently. From these insights, my team will design a new marketing strategy to convert casual riders into annual members. But first, Cyclistic executives must approve derived recommendations, so they must be backed up with compelling data insights and professional data visualizations.  
 ## ASK  
@@ -12,7 +12,7 @@ Formulate marketing strategies to convert casual riders into members.
 
 The directory of the team has assigned me to answer the first question; How do annual members differ from casual riders?  
 ## Prepare  
-The source of data is [diivvy_tripdata](https://divvy-tripdata.s3.amazonaws.com/index.html) which contains historical data of bike trips of Cysclistic's customers in the city of Chicago. The data has been made available by Motivate International Inc. under this [licence](https://divvybikes.com/data-license-agreement). I used 12 months worth of bike usage data relating to the year 2023. For confidentiality reasons, all personally identifiably information has been removed. Each file contains 13 columns; ride_id, rideable_type, started_at, ended_at, start_station_name, start_station_id, end_station_name, end_station_id, start_lat, start_lng, end_lat, end_lng, member_casual.  
+Historic data of bike trips of Cysclistic's customers is downloaded from [diivvy_tripdata](https://divvy-tripdata.s3.amazonaws.com/index.html) . The data has been made available by Motivate International Inc. under this [licence](https://divvybikes.com/data-license-agreement). I used 12 months worth of bike usage data relating to the year 2023. For confidentiality reasons, all personally identifiably information has been removed. Each file contains 13 columns; ride_id, rideable_type, started_at, ended_at, start_station_name, start_station_id, end_station_name, end_station_id, start_lat, start_lng, end_lat, end_lng, member_casual.  
 
 ## Process  
 I began by downloading 12 csv files contaning data from January 2023 to December 2023. Following that, I uploaded all the files on Big Query to iniate cleaning and processing of data. Due to file size limit, the files were split in Excel and uploaded in Bigquery as separate tables. Firstly, I used `UNION ALL` to integrate all the months into a single table.  
@@ -394,21 +394,23 @@ Casual  |  Member
 
 The maps above reveal most members started their rides in the vicinity of universities, hospitals, local parks, restaurants, train stations, office blocks and water bodies. Whereas casual riders frequented rides starting from beaches, piers, museums, and large parks. This directly correlates to the aforementioned findings leading to a confirmation that casual riders use the bikes for recreational purposes while members may use it for commute or to support their lifestyle.  
 
-## Key takeaways 
+## ACT  
+
+### Key takeaways 
 - Most weekday rides are by members and most weekend rides are by casual riders.
 - Members are using the bikes to commute to work in addition to recreational purposes where as casual riders are predominantly using bikes for recreational purposes.
 - Average ride length of casual riders is almost double than of members'.
 - High traffic of member' rides is seen in the vicinity of office blocks, local parks, restaurants, universities and hospitals.
 - High traffic of casual rides can be observed near the beach, museums, piers and large parks.  
 
-## Recommendations  
+### Recommendations  
 Heare are my top recommendations based on the insights derived from my analysis.  
 - A flexible pricing plan can be pushed forward specifically targeting casual riders that allow them to use the bikes on their preferred times.
 - Targeted marketing campaigns should be implemented before the start of Spring to attract prospective customers since the amount of riders peak from Spring to Summer months.
 - High traffic of riders is observed near water bodies, parks and museums suggesting the bikes are being used for recreational purposes. Marketing posters or banners can be set up in these locations to attract new customers.
 - Implementation of an inhouse app is highly recommended. The data gathered from the app can be instrumental in conversion of casual riders into annual members. For example, it can hel p with identifying casual riders that exhibit similar characteristics like annual members. Marketing campaigns can be integrated into the app , this allows for more exposure leading to an increased chance of turnover.
 
-## Dashboard  
+### Dashboard  
 ![Screenshot 2024-04-28 172912](https://github.com/prabinprojects/photos/assets/163358902/9d8319b2-f99e-467c-9f97-bae77034156a)
 
 
