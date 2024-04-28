@@ -1,6 +1,6 @@
 # **Google Capstone Project: Cyclistic Case Study**
 ## Introduction
-This project is a part of the Google Professional Data Analytics Course. In this report, I will be performing tasks similar to Junior Data Anlayst to draw insights from a fictional company called Cyclistic that provides bike services. The methodology of data analysis carried out for this project is adopted from the program that follows the steps of ASK, PREPARE, PROCESS, ANALYZE AND ACT.
+This project is a part of the Google Professional Data Analytics Course. In this report, I will be performing tasks similar to Junior Data Anlayst to draw insights from a fictional company called Cyclistic that provides bike services in the city of Chicago. The methodology of data analysis carried out for this project is adopted from the program that follows the steps of ASK, PREPARE, PROCESS, ANALYZE AND ACT.
 ## Scenario
 I am a junior data analyst working in the marketing analyst team at Cyclistic, a bike-share company in Chicago. The director of marketing believes the company’s future success depends on maximizing the number of annual memberships. Therefore, the team wants to understand how casual riders and annual members use Cyclistic bikes differently. From these insights, my team will design a new marketing strategy to convert casual riders into annual members. But first, Cyclistic executives must approve derived recommendations, so they must be backed up with compelling data insights and professional data visualizations.  
 ## ASK  
