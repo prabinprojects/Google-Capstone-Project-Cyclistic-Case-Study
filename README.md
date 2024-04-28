@@ -337,7 +337,70 @@ DESC LIMIT 10
 ```
 ![Screenshot 2024-04-27 164308](https://github.com/prabinprojects/photos/assets/163358902/02f67f88-6c0c-478e-bb81-03981f45d3f8)  
 
+## Key Findings  
 
+Statistics of riders across `BIKE TYPES`  
+Bike Type   |    Riders Distribution
+:----------:|:----------------------:
+![Screenshot 2024-04-28 173921](https://github.com/prabinprojects/photos/assets/163358902/723b748f-f65f-4c5f-bb50-84c8fca1bbb7)|![Screenshot 2024-04-28 173604](https://github.com/prabinprojects/photos/assets/163358902/1784b40c-ef7f-4764-a45f-3d7f800b8cb4)
+
+Majority of the customers prefer classic bike over other types. Interestingly, docked bikes are only used by casual members. Annual members 
+
+`Rides per Quarter` 
+
+![Screenshot 2024-04-22 142723](https://github.com/prabinprojects/photos/assets/163358902/28416d2e-ada0-4981-8114-ecb0ae8babbf)  
+
+Q4 and Q3 boasts the highest number of rides in both customer segments. Naturally, Q2 and Q1 fall behind in numbers with affecting factors likely to be cold weather. It is evident that customer consumption is seen high in summer months rather than winter months and this behaviour is identical in both casual and members.  
+
+`Monthly Rides`  
+
+![Screenshot 2024-04-22 150233](https://github.com/prabinprojects/photos/assets/163358902/a2ec4aa1-8e0e-476f-96a4-ded295f11cb3)  
+
+When compared statistics of monthly rides by membership type,  a similar trend in customer behaviour is seen in both customers. The number of rides grow rapidly during transition from spring to summer and fall sharply during the winter months. Members in general exhibit higher numbers than casual riders and this trend in maintained throughout the calendar year.  
+
+Ride distribution by `DAY OF WEEK`  
+  
+Casual              |               Member
+:------------------:|:-------------------:
+![Screenshot 2024-04-28 170210](https://github.com/prabinprojects/photos/assets/163358902/ba987648-12bd-4c57-aa5b-82a3603b27eb)|![Screenshot 2024-04-28 170227](https://github.com/prabinprojects/photos/assets/163358902/6fff4a97-4570-4d79-835f-73cc9524d0b5)  
+
+As seen in the set of bar graphs above, casual riders seem to be most active during weekends while the numbers shrink in the weekdays. Conversely, members tend to use the bikes consistently throughout the week followed by sharp decline in the weekends. Peak rides in casual riders can be seen on Saturday with Sunday as the second highest performing day. Whereas Tuesday, Wednesday and Thursday seem to be popular preferences for members and  exhibit identical ride statistics. This comparison suggests that members are predominantly using the bikes for commuting to work while casual riders do it for recreational purposes.  
+
+Average ride length by `MONTH`  
+
+![Screenshot 2024-04-22 162606](https://github.com/prabinprojects/photos/assets/163358902/0fc3c8eb-450c-411d-b4fc-7dd5434b6a8c)  
+
+When average ride of is compared it is discovered that the length of trips is highest in the spring and summer months and fall after for both type of customers. Average ride length by casual riders is nearly double the length of trips by members.  
+
+Average ride length by `DAY OF WEEK`  
+
+![Screenshot 2024-04-22 171656](https://github.com/prabinprojects/photos/assets/163358902/8658dfdb-fcea-42dd-87d2-dea97c43dd29)  
+
+The graph above shows similar trend for both type of riders where average ride length is highest on the weekend. The rise in ride length is steeper in casual riders than members.  
+
+![Screenshot 2024-04-22 160151](https://github.com/prabinprojects/photos/assets/163358902/6d35fa42-d89e-4f16-8aff-457af74acdf7)  
+
+Average ride length is seen highest during the mid-day for casual riders and lowest in the early hours. Meanwhile, average ride length stays consistent between 10 to 12 minutes.  
+
+`TOP DESTINATIONS`  
+
+Casual  |  Member
+:---------:|:----------:
+![Screenshot 2024-04-22 184800](https://github.com/prabinprojects/photos/assets/163358902/42c43698-e8b9-4ee5-9e2f-fe21d83827d8)|![Screenshot 2024-04-22 184705](https://github.com/prabinprojects/photos/assets/163358902/a75c4169-f4c4-46eb-a99e-a8af1440af42)  
+
+The top stations map reveals most members started their rides in the vicinity of universities, hospitals, local parks, restaurants, train stations, office blocks and water bodies. Whereas casual riders frequented rides starting from beaches, piers, museums, and large parks. This directly  correlates to the aforementioned findings leading to a confirmation that casual riders use the bikes for recreational purposes while members may use it for commute or to support their lifestyle.  
+
+## Summary  
+Overall, it is safe to say that ride patterns of both customer segments follow a similar trend. Number of riders in both customer segment peak during summer months and drop in the winter. However, if we dive further into the data, differences in pattern appear. For example, members seem to consistently show high number of rides during the weekdays namely Tuesday, Wednesday and Thursday. Conversely, casual riders prefer using the rides on Weekends where the number of trips are the highest. In terms of usage by hour, members and casual riders exhibit similar riding behaviour but there are more pronounced spikes of usage during morning and evening for members.  
+
+## Recommendations  
+Heare are my top recommendations based on the insights derived from my analysis.  
+- A flexible pricing plan can be pushed forward to convince casual riders that allow them to use the bikes on weekends or a specific time window such as after 5 pm.
+- Targeted marketing campaigns should be implemented before the start of Spring to attract prospective customers since the amount of riders peak from Spring to Summer months.
+- High traffic of riders is observed near water bodies, parks and museums suggesting the bikes are being used for recreational purposes. Marketing posters or banners can be set up in these locations to attract new customers.
+
+## Dashboard  
+![Screenshot 2024-04-28 172912](https://github.com/prabinprojects/photos/assets/163358902/9d8319b2-f99e-467c-9f97-bae77034156a)
 
 
 
