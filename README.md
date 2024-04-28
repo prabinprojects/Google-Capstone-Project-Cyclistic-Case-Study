@@ -2,7 +2,7 @@
 ## Introduction
 This project is part of the Google Professional Data Analytics Course. I will be performing tasks similar to Junior Data Anlayst to draw insights from a fictional bike services provider company called Cyclistic. I will be following data analysis methodology adopted from the program that follows the steps of ASK, PREPARE, PROCESS, ANALYZE AND ACT.
 ## Scenario
-You are a junior data analyst working in the marketing analyst team at Cyclistic, a bike-share company in Chicago. The director of marketing believes the company’s future success depends on maximizing the number of annual memberships. Therefore, your team wants to understand how casual riders and annual members use Cyclistic bikes differently. From these insights, your team will design a new marketing strategy to convert casual riders into annual members. But first, Cyclistic executives must approve your recommendations, so they must be backed up with compelling data insights and professional data visualizations.  
+I am a junior data analyst working in the marketing analyst team at Cyclistic, a bike-share company in Chicago. The director of marketing believes the company’s future success depends on maximizing the number of annual memberships. Therefore, the team wants to understand how casual riders and annual members use Cyclistic bikes differently. From these insights, my team will design a new marketing strategy to convert casual riders into annual members. But first, Cyclistic executives must approve derived recommendations, so they must be backed up with compelling data insights and professional data visualizations.  
 ## ASK  
 ### Business Task  
 Formulate marketing strategies to convert casual riders into members.  
@@ -12,10 +12,10 @@ Formulate marketing strategies to convert casual riders into members.
 
 The directory of the team has assigned me to answer the first question; How do annual members differ from casual riders?  
 ## Prepare  
-The source of data is [diivvy_tripdata](https://divvy-tripdata.s3.amazonaws.com/index.html) which contains historical trip data of bike usage in the city of Chicago. The data has been made available by Motivate International Inc. under this [licence](https://divvybikes.com/data-license-agreement). I will be using 12 months of bike usage data relating to the year 2023. For confidentiality reasons, all personally identifiably information has been removed. Each file contains 13 columns; ride_id, rideable_type, started_at, ended_at, start_station_name, start_station_id, end_station_name, end_station_id, start_lat, start_lng, end_lat, end_lng, member_casual.  
+The source of data is [diivvy_tripdata](https://divvy-tripdata.s3.amazonaws.com/index.html) which contains historical data of bike trips of Cysclistic's customers in the city of Chicago. The data has been made available by Motivate International Inc. under this [licence](https://divvybikes.com/data-license-agreement). I used 12 months worth of bike usage data relating to the year 2023. For confidentiality reasons, all personally identifiably information has been removed. Each file contains 13 columns; ride_id, rideable_type, started_at, ended_at, start_station_name, start_station_id, end_station_name, end_station_id, start_lat, start_lng, end_lat, end_lng, member_casual.  
 
 ## Process  
-I began my downloading 12 csv files contaning data from January 2023 to December 2023. Following that, I uploaded all the files on Big Query to iniate cleaning and processing of data. Due to file size limit of the platform, I split some files in Excel and uploaded them in Bigquery as separate tables. I used `UNION ALL` to integrate all the months into a single table.  
+I began by downloading 12 csv files contaning data from January 2023 to December 2023. Following that, I uploaded all the files on Big Query to iniate cleaning and processing of data. Due to file size limit, the files were split in Excel and uploaded in Bigquery as separate tables. Firstly, I used `UNION ALL` to integrate all the months into a single table.  
 ```
 CREATE TABLE if not exists bike-share-415816.okay.combined_data
 AS
@@ -84,7 +84,7 @@ WHERE ride_id (SELECT ride_id
                HAVING COUNT(ride_id)>1
 ```
 I found that there were no duplicate entries in the table.  
-I wrote queries to create table for quarters to analyse quarterly bike usage behaviour.  
+I created separate tables for each quarter to optimise analysis.  
 ```
 CREATE TABLE bike-share-415816.okay.Q1 as
 (SELECT * FROM bike-share-415816.okay.January
@@ -94,7 +94,7 @@ UNION ALL
 SELECT * FROM bike-share-415816.okay.March
 )
 ```  
-The free trial veresion of Big Query does not support ammend functions such as add or delete therefore I transferred non null values into another table and named it `combined_data1`.
+Free trial version of Big Query does not support ammend functions such as add or delete therefore I transferred non null values into another table and named it `combined_data1`.
 ```
 CREATE TABLE bike-share-415816.okay.combined_data1
 AS
@@ -107,7 +107,7 @@ end_lng IS NOT null and
 start_station_id IS NOT NULL);
 ```
 I followed the same procedure for all the quarters for accurate quartely analysis.  
-I then extracted `HOUR`, `DAY`, `MONTH` from `combined_data1` and integrated them into new table called `acc_data`.  
+I then created new columns by extracting `HOUR`, `DAY`, `MONTH` from `combined_data1` and integrated them into new table called `acc_data`.  
 ```
 CREATE TABLE bike-share-415816.okay.acc_data
 AS 
@@ -142,8 +142,7 @@ FROM bike-share-415816.okay.combined_data1
 WHERE timestamp_diff(ended_at, started_at, minute) > 1 and timestamp_diff(ended_at, started_at, hour) < 24);
 ```
 ## Analysis  
-First, I wrote queries to find distribution of bike preferrences across member types  
-Demographic of member types
+### Overall distribution of members
 ```
 SELECT COUNT(*) as count, member_type
 FROM bike-share-415816.okay.acc_data
@@ -152,7 +151,7 @@ ORDER BY member_type
 ```
 ![Screenshot 2024-04-27 152500](https://github.com/prabinprojects/photos/assets/163358902/a452e2be-60e9-4d70-89fc-59043c1b58e9)  
   
-### Distribution of bike types across members  
+### Distribution of members across bike types
 ```
 SELECT COUNT(*) as trips, rideable_type
 FROM bike-share-415816.okay.acc_data
@@ -161,7 +160,7 @@ ORDER BY trips
 ```
 ![Screenshot 2024-04-27 152933](https://github.com/prabinprojects/photos/assets/163358902/2e793ca0-3873-40b3-993a-6757cece2801)  
 
-Number of trips by `Month`  
+### Trips by `Month`  
 `Casual`
 ```
 SELECT COUNT(*) AS TRIPS, month
@@ -182,7 +181,7 @@ order by TRIPS
 ```
 ![Screenshot 2024-04-27 153939](https://github.com/prabinprojects/photos/assets/163358902/ebb24ae6-dda3-40af-8936-61f98a039819)  
 
-### Distribution of rides by day of the week  
+### Trips vs Day of week 
 `Casual`  
 ```
 SELECT day_of_week, count(day_of_week) as DAY
@@ -244,7 +243,7 @@ ORDER BY TRIPS DESC
 ![Screenshot 2024-04-27 155639](https://github.com/prabinprojects/photos/assets/163358902/48d33afc-2e8f-4a85-8b04-848abef8cfca)  
 
 ### Average ride length
-Average ride length by `Month`  
+#### Average ride length by `Month`  
   
 `Casual`
 ```
@@ -266,7 +265,7 @@ ORDER BY AVG_RIDE
 ```
 ![Screenshot 2024-04-27 161809](https://github.com/prabinprojects/photos/assets/163358902/c76e6118-79a7-4003-9289-fe9f2addaa40)  
 
-Average ride length by `DAY`  
+#### Average ride length by `DAY`  
   
 `Casual`
 ```
@@ -289,7 +288,7 @@ ORDER BY AVG_RIDE_LEN
 ![Screenshot 2024-04-27 162124](https://github.com/prabinprojects/photos/assets/163358902/78f84f70-241c-452b-bb30-cfa287084a8e)
 
   
-Average ride length by `Hour`  
+#### Average ride length by `Hour`  
   
 `Casual` 
 ```
@@ -312,7 +311,7 @@ ORDER BY AVG_RIDE_LEN DESC
 ```
 ![Screenshot 2024-04-27 163315](https://github.com/prabinprojects/photos/assets/163358902/e3afc478-c4f0-4196-ad95-86720968fca0)
 
-# Top stations by member type
+## Most popular stations
 `Casual`  
 ```
 SELECT 
@@ -339,65 +338,75 @@ DESC LIMIT 10
 
 ## Key Findings  
 
-Statistics of riders across `BIKE TYPES`  
+#### Statistics of riders across `BIKE TYPES`  
 Bike Type   |    Riders Distribution
 :----------:|:----------------------:
 ![Screenshot 2024-04-28 173921](https://github.com/prabinprojects/photos/assets/163358902/723b748f-f65f-4c5f-bb50-84c8fca1bbb7)|![Screenshot 2024-04-28 173604](https://github.com/prabinprojects/photos/assets/163358902/1784b40c-ef7f-4764-a45f-3d7f800b8cb4)
 
-Majority of the customers prefer classic bike over other types. Interestingly, docked bikes are only used by casual members. Annual members 
-
-`Rides per Quarter` 
+Majority of the customers prefer classic bike over other types. Interestingly, docked bikes are only used by casual riders indicating characteristics of spontaniety rather than a routinely bheaviour. More than 60% of customers have annual membership.
+#### `Rides per Quarter` 
 
 ![Screenshot 2024-04-22 142723](https://github.com/prabinprojects/photos/assets/163358902/28416d2e-ada0-4981-8114-ecb0ae8babbf)  
 
-Q4 and Q3 boasts the highest number of rides in both customer segments. Naturally, Q2 and Q1 fall behind in numbers with affecting factors likely to be cold weather. It is evident that customer consumption is seen high in summer months rather than winter months and this behaviour is identical in both casual and members.  
+Q4 and Q3 boasts the highest number of rides in both member types. Naturally, Q2 and Q1 fall behind in numbers with affecting factors likely to be cold weather. It is evident that customer consumption is seen highest in summer months rather than winter months and this behaviour is identical in both casual and members.  
 
-`Monthly Rides`  
+#### `Monthly Rides`  
 
 ![Screenshot 2024-04-22 150233](https://github.com/prabinprojects/photos/assets/163358902/a2ec4aa1-8e0e-476f-96a4-ded295f11cb3)  
 
 When compared statistics of monthly rides by membership type,  a similar trend in customer behaviour is seen in both customers. The number of rides grow rapidly during transition from spring to summer and fall sharply during the winter months. Members in general exhibit higher numbers than casual riders and this trend in maintained throughout the calendar year.  
 
-Ride distribution by `DAY OF WEEK`  
+#### Ride distribution by `DAY OF WEEK`  
   
 Casual              |               Member
 :------------------:|:-------------------:
 ![Screenshot 2024-04-28 170210](https://github.com/prabinprojects/photos/assets/163358902/ba987648-12bd-4c57-aa5b-82a3603b27eb)|![Screenshot 2024-04-28 170227](https://github.com/prabinprojects/photos/assets/163358902/6fff4a97-4570-4d79-835f-73cc9524d0b5)  
 
-As seen in the set of bar graphs above, casual riders seem to be most active during weekends while the numbers shrink in the weekdays. Conversely, members tend to use the bikes consistently throughout the week followed by sharp decline in the weekends. Peak rides in casual riders can be seen on Saturday with Sunday as the second highest performing day. Whereas Tuesday, Wednesday and Thursday seem to be popular preferences for members and  exhibit identical ride statistics. This comparison suggests that members are predominantly using the bikes for commuting to work while casual riders do it for recreational purposes.  
+As seen in the set of bar graphs above, casual riders seem to be most active during weekends while the numbers shrink in the weekdays. Conversely, members tend to use the bikes consistently in high numbers throughout the week followed by sharp decline in the weekends. Peak rides in casual riders can be seen on Saturday with Sunday as the second highest performing day. Whereas Tuesday, Wednesday and Thursday seem to be more popular choices for members and they all share identical ride statistics. The data suggests that members might predominantly be using the bikes for commuting to work while casual riders do it for recreational purposes.  
 
-Average ride length by `MONTH`  
+#### Hourly Trips pattern  
+
+![Screenshot 2024-04-22 151713](https://github.com/prabinprojects/photos/assets/163358902/55a8c512-4cb0-4c3d-930b-f4969be24103)  
+
+As seen in the graph above, the usage of bikes by casual riders rise gradually from 5 AM untill its peak at 5 PM followed by a sharp fall. Although both member types share similar peak and trend line, a sharp spike is observed from 6 to 8 AM in annual members which strongly suggests that rides are being used to commute to work. It is possible that casual riders might be the using bikes only on their way back from work or simply for recreational purposes.
+#### Average ride length by `MONTH`  
 
 ![Screenshot 2024-04-22 162606](https://github.com/prabinprojects/photos/assets/163358902/0fc3c8eb-450c-411d-b4fc-7dd5434b6a8c)  
 
-When average ride of is compared it is discovered that the length of trips is highest in the spring and summer months and fall after for both type of customers. Average ride length by casual riders is nearly double the length of trips by members.  
+When average ride of is compared it is discovered that the length of trips is highest in the spring and summer months and fall after for both type of customers. Although, more trips are taken by annual members, casual members seem to use it for a longer period of time. According to the data average ride length by casual riders is nearly double the length of trips by members.  
 
-Average ride length by `DAY OF WEEK`  
+#### Average ride length by `DAY OF WEEK`  
 
 ![Screenshot 2024-04-22 171656](https://github.com/prabinprojects/photos/assets/163358902/8658dfdb-fcea-42dd-87d2-dea97c43dd29)  
 
-The graph above shows similar trend for both type of riders where average ride length is highest on the weekend. The rise in ride length is steeper in casual riders than members.  
+The graph above shows similar trend is exhibited by both type of riders where peak average ride length is reached on the weekend. The increase in average ride length is steeper in casual riders than annual members.  
 
+#### Average ride length by 
 ![Screenshot 2024-04-22 160151](https://github.com/prabinprojects/photos/assets/163358902/6d35fa42-d89e-4f16-8aff-457af74acdf7)  
 
-Average ride length is seen highest during the mid-day for casual riders and lowest in the early hours. Meanwhile, average ride length stays consistent between 10 to 12 minutes.  
+Average ride length is seen highest during the mid-day for casual riders and lowest in the early hours. Meanwhile, average ride length stays of annual members stay consistent between 10 to 12 minutes.  
 
-`TOP DESTINATIONS`  
+#### `TOP DESTINATIONS`  
 
 Casual  |  Member
 :---------:|:----------:
 ![Screenshot 2024-04-22 184800](https://github.com/prabinprojects/photos/assets/163358902/42c43698-e8b9-4ee5-9e2f-fe21d83827d8)|![Screenshot 2024-04-22 184705](https://github.com/prabinprojects/photos/assets/163358902/a75c4169-f4c4-46eb-a99e-a8af1440af42)  
 
-The top stations map reveals most members started their rides in the vicinity of universities, hospitals, local parks, restaurants, train stations, office blocks and water bodies. Whereas casual riders frequented rides starting from beaches, piers, museums, and large parks. This directly  correlates to the aforementioned findings leading to a confirmation that casual riders use the bikes for recreational purposes while members may use it for commute or to support their lifestyle.  
+The maps above reveal most members started their rides in the vicinity of universities, hospitals, local parks, restaurants, train stations, office blocks and water bodies. Whereas casual riders frequented rides starting from beaches, piers, museums, and large parks. This directly correlates to the aforementioned findings leading to a confirmation that casual riders use the bikes for recreational purposes while members may use it for commute or to support their lifestyle.  
 
-## Summary  
-Overall, it is safe to say that ride patterns of both customer segments follow a similar trend. Number of riders in both customer segment peak during summer months and drop in the winter. However, if we dive further into the data, differences in pattern appear. For example, members seem to consistently show high number of rides during the weekdays namely Tuesday, Wednesday and Thursday. Conversely, casual riders prefer using the rides on Weekends where the number of trips are the highest. In terms of usage by hour, members and casual riders exhibit similar riding behaviour but there are more pronounced spikes of usage during morning and evening for members.  
+## Key takeaways 
+- Most weekday rides are by members and most weekend rides are by casual riders.
+- Members are using the bikes to commute to work in addition to recreational purposes where as casual riders are predominantly using bikes for recreational purposes.
+- Average ride length of casual riders is almost double than of members'.
+- High traffic of member' rides is seen in the vicinity of office blocks, local parks, restaurants, universities and hospitals.
+- High traffic of casual rides can be observed near the beach, museums, piers and large parks.  
 
 ## Recommendations  
 Heare are my top recommendations based on the insights derived from my analysis.  
-- A flexible pricing plan can be pushed forward to convince casual riders that allow them to use the bikes on weekends or a specific time window such as after 5 pm.
+- A flexible pricing plan can be pushed forward specifically targeting casual riders that allow them to use the bikes on their preferred times.
 - Targeted marketing campaigns should be implemented before the start of Spring to attract prospective customers since the amount of riders peak from Spring to Summer months.
 - High traffic of riders is observed near water bodies, parks and museums suggesting the bikes are being used for recreational purposes. Marketing posters or banners can be set up in these locations to attract new customers.
+- Implementation of an inhouse app is highly recommended. The data gathered from the app can be instrumental in conversion of casual riders into annual members. For example, it can hel p with identifying casual riders that exhibit similar characteristics like annual members. Marketing campaigns can be integrated into the app , this allows for more exposure leading to an increased chance of turnover.
 
 ## Dashboard  
 ![Screenshot 2024-04-28 172912](https://github.com/prabinprojects/photos/assets/163358902/9d8319b2-f99e-467c-9f97-bae77034156a)
