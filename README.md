@@ -15,7 +15,7 @@ The directory of the team has assigned me to answer the first question; How do a
 Historic data of bike trips of Cysclistic's customers is downloaded from [diivvy_tripdata](https://divvy-tripdata.s3.amazonaws.com/index.html) . The data has been made available by Motivate International Inc. under this [licence](https://divvybikes.com/data-license-agreement). I used 12 months worth of bike usage data relating to the year 2023. For confidentiality reasons, all personally identifiably information has been removed. Each file contains 13 columns; ride_id, rideable_type, started_at, ended_at, start_station_name, start_station_id, end_station_name, end_station_id, start_lat, start_lng, end_lat, end_lng, member_casual.  
 
 ## Process  
-I began by downloading 12 csv files contaning data from January 2023 to December 2023. Following that, I uploaded all the files on Big Query to iniate cleaning and processing of data. Due to file size limit, the files were split in Excel and uploaded in Bigquery as separate tables. Firstly, I used `UNION ALL` to integrate all the months into a single table.  
+I began by downloading 12 csv files contaning data from January 2023 to December 2023. Following that, I uploaded all the files on Big Query to initiate data cleaning and processing. Due to file size limit, the files were first split in Excel before uploading in Bigquery. Firstly, I used `UNION ALL` to integrate all the months into a single table.  
 ```
 CREATE TABLE if not exists bike-share-415816.okay.combined_data
 AS
