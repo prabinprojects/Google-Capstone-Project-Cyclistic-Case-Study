@@ -141,7 +141,7 @@ format_timestamp("%I:%M %p", started_at) AS time
 FROM bike-share-415816.okay.combined_data1
 WHERE timestamp_diff(ended_at, started_at, minute) > 1 and timestamp_diff(ended_at, started_at, hour) < 24);
 ```
-## Analysis  
+## Analyse 
 ### Overall distribution of members
 ```
 SELECT COUNT(*) as count, member_type
