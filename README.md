@@ -408,7 +408,7 @@ Heare are my top recommendations based on the insights derived from my analysis.
 - A flexible pricing plan can be pushed forward specifically targeting casual riders that allow them to use the bikes on their preferred times.
 - Targeted marketing campaigns should be implemented before the start of Spring to attract prospective customers since the amount of riders peak from Spring to Summer months.
 - High traffic of riders is observed near water bodies, parks and museums suggesting the bikes are being used for recreational purposes. Marketing posters or banners can be set up in these locations to attract new customers.
-- Implementation of an inhouse app is highly recommended. The data gathered from the app can be instrumental in conversion of casual riders into annual members. For example, it can help with identifying casual riders that exhibit similar characteristics to annual members. In-app marketing can be implemented to target these types of customers. This allows for more exposure leading to an increased chance of turnover.
+- Implementation of an inhouse app is highly recommended. The data gathered from the app can be instrumental in conversion of casual riders into annual members. For example, it can help with identifying casual riders that exhibit similar characteristics to annual members. In-app marketing can be implemented to target these types of customers. This allows for more exposure leading to an increased chance of acquisition.
 
 ### Dashboard  
 ![Screenshot 2024-04-28 172912](https://github.com/prabinprojects/photos/assets/163358902/9d8319b2-f99e-467c-9f97-bae77034156a)
